@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #080808;
+  --color-ink-2: #0f0f0f;
+  --color-card: #151515;
+  --color-card-2: #111111;
+  --color-input: #1e1e1e;
+  --color-line: #262626;
+  --color-line-2: #222222;
+  --color-lime: #ccff00;
+  --color-muted: #8a8a8a;
+
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    background-color: #080808;
+  }
+
+  body {
+    margin: 0;
+    background-color: #080808;
+    color: #ffffff;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: #ccff00;
+    color: #080808;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #080808;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ccff00;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #ffffff;
+    -webkit-box-shadow: 0 0 0 1000px #1e1e1e inset;
+    caret-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  /* Crystal clear media: NO blur, only sharpness + contrast */
+  .media-sharp {
+    filter: brightness(1.05) contrast(1.1) saturate(1.05);
+    image-rendering: auto;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  .text-outline {
+    -webkit-text-stroke: 1px #2e2e2e;
+    color: transparent;
+  }
+
+  .text-outline-lime {
+    -webkit-text-stroke: 1px #ccff00;
+    color: transparent;
+  }
+
+  .marquee-track {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: marquee 26s linear infinite;
+  }
+
+  .marquee-track-slow {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: marquee 44s linear infinite;
+  }
+
+  .marquee-reverse {
+    animation-direction: reverse;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Lenis smooth scroll base styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+.pulse-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1px solid #ccff00;
+  animation: pulse-ring 2.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .marquee-track-slow,
+  .pulse-ring::after {
+    animation: none !important;
+  }
+}
